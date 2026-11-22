@@ -40,9 +40,8 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                def scannerHome = tool 'sonar-scanner'
                     bat """
-                        "${scannerHome}\\bin\\sonar-scanner.bat" ^
+                        mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar ^
                         -Dsonar.projectKey=BMI_CL ^
                         -Dsonar.sources=src ^
                         -Dsonar.projectName=BMI_CL ^
