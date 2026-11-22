@@ -46,8 +46,8 @@ pipeline {
                         -Dsonar.sources=src ^
                         -Dsonar.projectName=BMI_CL ^
                         -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.login=${env.SONAR_TOKEN} ^
-                        -Dsonar.java.binaries=target/classes
+                        -Dsonar.java.binaries=target/classes ^
+                        -Dsonar.token=%SONAR_TOKEN%
                     """
                 }
             }
