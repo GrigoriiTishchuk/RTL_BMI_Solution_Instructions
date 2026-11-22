@@ -43,7 +43,8 @@ pipeline {
                     bat """
                         mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar ^
                         -Dsonar.projectKey=BMI_CL ^
-                        -Dsonar.sources=src ^
+                        -Dsonar.sources=src/main ^
+                        -Dsonar.tests=src/test ^
                         -Dsonar.projectName=BMI_CL ^
                         -Dsonar.host.url=http://localhost:9000 ^
                         -Dsonar.java.binaries=target/classes ^
