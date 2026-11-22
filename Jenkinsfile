@@ -11,8 +11,8 @@ pipeline {
        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'  // Adjust to your actual JDK path
 
 
-        SONARQUBE_SERVER = 'XXXXX'
-        SONAR_TOKEN = credentials('XXXXX') //make sure a right token is selected
+        SONARQUBE_SERVER = 'SonarQubeServer'
+        SONAR_TOKEN = credentials('SONAR_TOKEN') //make sure a right token is selected
         DOCKERHUB_CREDENTIALS_ID = 'XXXX'
         DOCKERHUB_REPO = 'XXXX/bmi_3013_OMANIMI'
         DOCKER_IMAGE_TAG = 'latest'
