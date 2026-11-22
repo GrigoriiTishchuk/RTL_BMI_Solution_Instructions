@@ -53,6 +53,11 @@ pipeline {
                 }
             }
         }
+        stage('Publish Coverage Report') {
+            steps {
+                jacoco execPattern: 'target/jacoco.exec'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
