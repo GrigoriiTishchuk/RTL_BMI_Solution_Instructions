@@ -69,20 +69,28 @@ class BMIControllerTest {
 
     @Test
     void onCalculateClick_validInputs_setsFormattedBmiAndCallsSaveResult() {
-        when(tfWeight.getText()).thenReturn("70");
-        when(tfHeight.getText()).thenReturn("175");
-        try (MockedStatic<LocalizationService> locMock = mockStatic(LocalizationService.class);
-             MockedStatic<BMIResultService> saveMock = mockStatic(BMIResultService.class);
-             MockedStatic<Platform> platformMock = mockStatic(Platform.class)) {
-            locMock.when(() -> LocalizationService.getLocalizedStrings(any(Locale.class)))
-                    .thenReturn(Map.of("result", "BMI:"));
-            platformMock.when(() -> Platform.runLater(any(Runnable.class)))
-                    .thenAnswer(invocation -> null);
-            controller.onENClick(new ActionEvent());
-            controller.onCalculateClick(new ActionEvent());
-            verify(lblResult).setText("BMI: 22.86");
-            saveMock.verify(() -> BMIResultService.saveResult(
-                    eq(70.0), eq(1.75), anyDouble(), eq("en")));
+        Locale previousLocale = Locale.getDefault();
+        Locale.setDefault(Locale.US);
+        try {
+            when(tfWeight.getText()).thenReturn("70");
+            when(tfHeight.getText()).thenReturn("175");
+            try (MockedStatic<LocalizationService> locMock = mockStatic(LocalizationService.class);
+                 MockedStatic<BMIResultService> saveMock = mockStatic(BMIResultService.class);
+                 MockedStatic<Platform> platformMock = mockStatic(Platform.class)) {
+                locMock.when(() -> LocalizationService.getLocalizedStrings(any(Locale.class)))
+                        .thenReturn(Map.of("result", "BMI:"));
+                platformMock.when(() -> Platform.runLater(any(Runnable.class)))
+                        .thenAnswer(invocation -> null);
+
+                controller.onENClick(new ActionEvent());
+                controller.onCalculateClick(new ActionEvent());
+
+                verify(lblResult).setText("BMI: 22.86");
+                saveMock.verify(() -> BMIResultService.saveResult(
+                        eq(70.0), eq(1.75), anyDouble(), eq("en")));
+            }
+        } finally {
+            Locale.setDefault(previousLocale);
         }
     }
 
